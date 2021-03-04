@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eqwid</title>
+</head>
+<body>
+    <div 
+        class="car"
+        style="background-image: url(https://i.ytimg.com/vi/cFmFACENiGs/maxresdefault.jpg); width: 1300px; height: 700px; position: relative;">
+        <div 
+            id="1" 
+            data-product="70178253" 
+            class="car-details"
+            style="position: absolute; background: red; top: 16px; left: 30px; width: 435px; height: 300px; opacity: 0.4; border: 1px solid white; cursor: pointer;">
+        </div>
+        <div 
+            id="2" 
+            data-product="70178249" 
+            class="car-details"
+            style="position: absolute; background: red; top: 316px; left: 30px; width: 435px; height: 300px; opacity: 0.4; border: 1px solid white; cursor: pointer;">
+        </div>
+        <div 
+            id="3" 
+            data-product="70178254" 
+            class="car-details"
+            style="position: absolute; background: red; top: 16px; left: 465px; width: 435px; height: 300px; opacity: 0.4; border: 1px solid white; cursor: pointer;">
+        </div>
+        <div 
+            id="4" 
+            data-product="70178255" 
+            class="car-details"
+            style="position: absolute; background: red; top: 316px; left: 465px; width: 435px; height: 300px; opacity: 0.4; border: 1px solid white; cursor: pointer;">
+        </div>
+        <div 
+            id="5" 
+            data-product="70178258" 
+            class="car-details"
+            style="position: absolute; background: red; top: 166px; left: 902px; width: 355px; height: 450px; opacity: 0.4; border: 1px solid white; cursor: pointer;">
+        </div>
+    </div>
+    <p 
+        class="description" 
+        style="display: none; font-size: 36px; border: 2px solid black; height: 450px;  align-items: center; justify-content: center;"
+        >вы собрали автомобиль</p>
+    <script type='text/javascript' src='https://app.ecwid.com/script.js?1003'></script>
+    <script type='text/javascript'>
+        xProductBrowser("defaultCategoryId=20671017");
+    </script>
+    <script>
+        Ecwid.OnAPILoaded.add(function () {
+            Ecwid.Cart.clear();
+            const cards = document.querySelectorAll('.car-details');
+
+            function getIdandQuan() {
+                let productId = this.getAttribute('data-product');
+                this.style.opacity = "1";
+
+                Ecwid.Cart.addProduct(+productId)
+                Ecwid.Cart.get(function (cart) {
+                    let car = document.querySelector('.car');
+                    let description = document.querySelector('.description');
+
+                    if (cart.productsQuantity >= 4) {
+                        car.style.display = "none";
+                        description.style.display = "flex";
+                    } else {
+                        car.style.display = "block";
+                        description.style.display = "none";
+                    }
+                });
+                this.removeEventListener('click', getIdandQuan);
+            }
+
+            cards.forEach(card => {
+                card.addEventListener('click', getIdandQuan)
+            });
+        });
+    </script>
+</body>
+
+</html>
